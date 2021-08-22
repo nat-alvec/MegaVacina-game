@@ -1,17 +1,25 @@
-class Character{
-    constructor (img, x, y, width, height){
-        this.img = img;
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-    }
+// Criação da classe Character para a criação dos inimigos e do personagem controlável pelo player.
 
-    
+class Character {
+  constructor(ctx, img, x, y, width, height) {
+    this.ctx = ctx;
+    this.img = img; // string do caminho da imagem
 
-    }
+    // posição inicial
+    this.x = x;
+    this.y = y;
+
+    // posição final
+    this.width = width;
+    this.height = height;
+  }
+
+  render() {
+    const imgCharacter = new Image();
+    imgCharacter.src = this.img;
+
+    imgCharacter.addEventListener("load", () => {
+      this.ctx.drawImage(imgCharacter, this.x, this.y, this.width, this.height);
+    });
+  }
 }
-
-
-const serynge = new Character (imgSerynge, 255, 240, 64, 64);
-const enemy1 = new Character (imgEnemy1, 255, 60, 30, 30 );

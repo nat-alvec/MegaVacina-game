@@ -1,7 +1,4 @@
+// eslint-disable-next-line no-undef
 const gameBoard = new Game();
 
-gameBoard.renderBackground();
-gameBoard.renderSerynge();
-gameBoard.renderEnemy();
-
-
+gameBoard.run();
