@@ -4,14 +4,15 @@
 class Serynge {
   constructor(ctx) {
     this.ctx = ctx;
+
+    this.imgSerynge = new Image();
+    this.imgSerynge.src = "./images/syringe.png";
+    this.imgSerynge.addEventListener("load", () => {
+      this.ctx.drawImage(this.imgSerynge, 280, 245, 40, 40);
+     });
   }
 
   render() {
-    const imgSerynge = new Image();
-    imgSerynge.src = "./images/syringe.png";
-
-    imgSerynge.addEventListener("load", () => {
-     this.ctx.drawImage(imgSerynge, 280, 245, 40, 40);
-    });
+     this.ctx.drawImage(this.imgSerynge, 280, 245, 40, 40);
   }
 }

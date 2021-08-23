@@ -6,7 +6,13 @@ class Covid {
       this.img = img;                                 // string do caminho da imagem
       this.x = x;                                    // posição inicial
       this.y = y;
-      this.velocity = 1;                                  // posição inicial                         
+      this.velocity = 1;
+      
+      this.imgCovid = new Image();
+      this.imgCovid.src = this.img;
+      this.imgCovid.addEventListener("load", () => {
+        this.ctx.drawImage(this.imgCovid, this.x, this.y, 30, 30);
+      });                    
     }
 
     move(){
@@ -14,12 +20,7 @@ class Covid {
     }
   
     render() {
-      const imgCovid = new Image();
-      imgCovid.src = this.img;
-  
-      imgCovid.addEventListener("load", () => {
-        this.ctx.drawImage(imgCovid, this.x, this.y, 30, 30);
-      });
+        this.ctx.drawImage(this.imgCovid, this.x, this.y, 30, 30);
     }
 
   }

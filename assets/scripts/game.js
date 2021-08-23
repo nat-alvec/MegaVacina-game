@@ -9,7 +9,13 @@ class Game {
     this.serynge = new Serynge(this.ctx);
     this.covids = [];
     this.totalCovids = 6;
-
+    
+    this.background = new Image();
+    this.background.src = "./images/tlo.png";
+    this.background.addEventListener("load", () => {
+      this.ctx.drawImage(this.background, 0, 0, this.width, this.height);
+    });
+    
   }
   //Iniciando a criação de métodos para classe Game
   
@@ -18,20 +24,9 @@ class Game {
       this.covids.push(new Covid(this.ctx,"./images/coronavirus (1).png", 80*i , 60))
     }
   }
-
-  renderBackground() {
-    //método para renderizar o plano de fundo do jogo//
-    const imgBackground = new Image(); // Instanciando a classe Image//
-    imgBackground.src = "./images/tlo.png";
-
-    imgBackground.addEventListener("load", () => {
-      this.ctx.drawImage(imgBackground, 0, 0, this.width, this.height);
-    });
-  }
   
   renderImages() {
-    //método para renderizar os métodos das outras classes//
-    this.renderBackground();
+    this.ctx.drawImage(this.background, 0, 0, this.width, this.height);
     this.serynge.render();
 
 
