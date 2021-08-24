@@ -1,4 +1,4 @@
-
+// Criação da classe Character para a criação dos inimigos e do personagem controlável pelo player.
 
 class Serynge {
   constructor(ctx, x, y) {
@@ -6,15 +6,13 @@ class Serynge {
     this.x = x;
     this.y = y;
     this.velocity = 5;
+    this.left = 37;
+    this.right = 39;
 
     this.imgSerynge = new Image();
     this.imgSerynge.src = "./images/syringe.png";
     this.imgSerynge.addEventListener("load", () => {
       this.ctx.drawImage(this.imgSerynge, this.x, this.y, 40, 40);
-
-      this.left = 37;
-      this.rigth = 39;
-      this.shoot = 32;
     });
   }
 
@@ -22,15 +20,27 @@ class Serynge {
     this.ctx.drawImage(this.imgSerynge, this.x, this.y, 40, 40);
   }
 
-  move() {
-    window.addEventListener("keydown", (event) => {
-      const key = event.keyCode;
-      if (key === this.left){
-        this.x = this.x - this.velocity;
+  move(activeKeys) {  
+      const isMovingLeft = activeKeys[this.left];
+      const isMovingRight = activeKeys[this.right];
+      const maxLimit = this.x > 530;
+      const minLimit = this.x < 25;
+
+      if (isMovingLeft){
+        this.x -= this.velocity;
+        console.log(this.x)
       }
-      if (key === this.rigth){
-        this.x = this.x + this.velocity;
+      if (isMovingRight){
+        this.x += this.velocity;
+        console.log(this.x)
       }
-    });
+      if (minLimit){
+        this.x = 25;
+        console.log(this.x)
+      }
+      if (maxLimit){
+        this.x = 530;
+        console.log(this.x)
+      }
   }
 }
