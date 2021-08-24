@@ -6,7 +6,7 @@ class Covid {
       this.img = img;                                 // string do caminho da imagem
       this.x = x;                                    // posição inicial
       this.y = y;
-      this.velocity = 1;
+      this.velocity = 0.3;
       
       this.imgCovid = new Image();
       this.imgCovid.src = this.img;
@@ -16,7 +16,7 @@ class Covid {
     }
 
     move(){
-        this.x = this.x + this.velocity
+        this.y += this.velocity
     }
   
     render() {

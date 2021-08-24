@@ -19,11 +19,14 @@ class Game {
   //Iniciando a criação de métodos para classe Game
 
   newCovid() {
-    for (let i = 1; i <= this.totalCovids; i++) {
+    setInterval(() => {
+      const x = Math.random() * this.canvas.width
+      const y = -30
       this.covids.push(
-        new Covid(this.ctx, "./images/coronavirus (1).png", 80 * i, 60)
-      );
-    }
+          new Covid(this.ctx, "./images/coronavirus (1).png", x , y)
+        );
+        console.log("enemy");
+    }, 1500)
   }
 
   renderImages() {
