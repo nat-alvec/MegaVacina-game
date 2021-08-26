@@ -1,4 +1,10 @@
-// Criação da classe game que irá comandar todo o board.
+const gameSound = new Audio();
+gameSound.src = "./images/BackgroundSound.wav";
+gameSound.volume = 0.2;
+
+const shootSound = new Audio();
+shootSound.src = "./images/shootSound.mp3";
+shootSound.volume = 0.4;
 
 class Game {
   constructor() {
@@ -18,14 +24,13 @@ class Game {
 
     this.covids = [];
     this.projectiles = [];
+    this.activeKeys = {};
 
     this.background = new Image();
     this.background.src = "./images/tlo.png";
     this.background.addEventListener("load", () => {
       this.ctx.drawImage(this.background, 0, 0, this.width, this.height);
     });
-
-    this.activeKeys = {};
   }
 
   newProjectile() {
@@ -58,9 +63,10 @@ class Game {
   }
 
   collisionCovidAndFloor() {
-    for (let i = 0; i < this.covids.length; i++){
-      if (this.covids[i].bottom() > 285){
-        alert("You got infected!")
+    for (let i = 0; i < this.covids.length; i++) {
+      if (this.covids[i].bottom() > 285) {
+        alert("You got infected!");
+        gameSound.pause();
       }
     }
   }
@@ -69,23 +75,23 @@ class Game {
     if (this.projectiles.length != 0) {
       this.projectiles.forEach((projectile, projectilePosition) => {
         this.covids.forEach((covid, covidPosition) => {
-          console.log(projectile, covid)
+          console.log(projectile, covid);
           const impact = [
             projectile.top() <= covid.bottom(),
             projectile.left() >= covid.left(),
             projectile.left() <= covid.right(),
             projectile.right() <= covid.bottom(),
             projectile.right() >= covid.left(),
-            projectile.right() <= covid.right()
-          ]
-          
+            projectile.right() <= covid.right(),
+          ];
+
           if (impact[0] && impact[1] && impact[2]) {
-            console.log('colisão!!!', projectile, covid)
-            this.projectiles.splice(projectilePosition, 1)
-            this.covids.splice(covidPosition, 1)
+            console.log("colisão!!!", projectile, covid);
+            this.projectiles.splice(projectilePosition, 1);
+            this.covids.splice(covidPosition, 1);
           }
-        })
-      })
+        });
+      });
     }
   }
 
@@ -101,6 +107,9 @@ class Game {
 
   setUp() {
     this.gaming = true;
+    gameSound.play();
+    gameSound.loop = true;
+
     this.newCovid();
 
     document.addEventListener("keydown", (event) => {
@@ -114,6 +123,7 @@ class Game {
 
       if (key === 32) {
         this.newProjectile();
+        shootSound.play();
       }
     });
   }

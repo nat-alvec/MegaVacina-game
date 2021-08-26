@@ -14,7 +14,13 @@ class Serynge {
     this.imgSerynge = new Image();
     this.imgSerynge.src = "./images/syringe.png";
     this.imgSerynge.addEventListener("load", () => {
-      this.ctx.drawImage(this.imgSerynge, this.x, this.y, this.width, this.height);
+      this.ctx.drawImage(
+        this.imgSerynge,
+        this.x,
+        this.y,
+        this.width,
+        this.height
+      );
     });
   }
 
@@ -22,23 +28,23 @@ class Serynge {
     this.ctx.drawImage(this.imgSerynge, this.x, this.y, 40, 40);
   }
 
-  move(activeKeys) {  
-      const isMovingLeft = activeKeys[this.left];
-      const isMovingRight = activeKeys[this.right];
-      const maxLimit = this.x > 530;
-      const minLimit = this.x < 25;
+  move(activeKeys) {
+    const isMovingLeft = activeKeys[this.left];
+    const isMovingRight = activeKeys[this.right];
+    const maxLimit = this.x > 530;
+    const minLimit = this.x < 25;
 
-      if (isMovingLeft){
-        this.x -= this.velocity;
-      }
-      if (isMovingRight){
-        this.x += this.velocity;
-      }
-      if (minLimit){
-        this.x = 25;
-      }
-      if (maxLimit){
-        this.x = 530;
-      }
+    if (isMovingLeft) {
+      this.x -= this.velocity;
+    }
+    if (isMovingRight) {
+      this.x += this.velocity;
+    }
+    if (minLimit) {
+      this.x = 25;
+    }
+    if (maxLimit) {
+      this.x = 530;
+    }
   }
 }

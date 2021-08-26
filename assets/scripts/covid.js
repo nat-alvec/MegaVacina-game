@@ -1,9 +1,10 @@
 class Covid {
   constructor(ctx, img, x, y) {
-    this.ctx = ctx;                                 // ctx que dará acesso ao ctx da classe Game
-    this.img = img;                                 // string do caminho da imagem
-    this.x = x;                                    // posição inicial
+    this.ctx = ctx;                                 
+    this.img = img;                                 
+    this.x = x;                                    
     this.y = y;
+    
     this.width = 30;
     this.height = 30;
     this.velocity = 0.3;
