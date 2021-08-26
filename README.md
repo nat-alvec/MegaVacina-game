@@ -17,6 +17,7 @@ Help the population to get rid of the pandemic! Vaccinate against all viruses be
 
 ## How to play
 
+- [PLAY](https://nat-alvec.github.io/MegaVacina-game/)
 - Press START button to begin
 - Use "➡" to go right
 - Use "⬅" to go left
