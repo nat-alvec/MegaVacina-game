@@ -26,7 +26,6 @@ class Game {
     });
 
     this.activeKeys = {};
-    this.gaming = false;
   }
 
   newProjectile() {
@@ -61,7 +60,7 @@ class Game {
   collisionCovidAndFloor() {
     for (let i = 0; i < this.covids.length; i++){
       if (this.covids[i].bottom() > 285){
-        alert("game over!")
+        alert("You got infected!")
       }
     }
   }
@@ -102,7 +101,6 @@ class Game {
 
   setUp() {
     this.gaming = true;
-
     this.newCovid();
 
     document.addEventListener("keydown", (event) => {
