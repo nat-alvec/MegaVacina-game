@@ -58,6 +58,14 @@ class Game {
     }
   }
 
+  collisionCovidAndFloor() {
+    for (let i = 0; i < this.covids.length; i++){
+      if (this.covids[i].bottom() > 285){
+        alert("game over!")
+      }
+    }
+  }
+
   collisionCovidAndProjectile() {
     if (this.projectiles.length != 0) {
       this.projectiles.forEach((projectile, projectilePosition) => {
@@ -114,6 +122,7 @@ class Game {
 
   run() {
     setInterval(() => {
+      this.collisionCovidAndFloor();
       this.ctx.clearRect(0, 0, this.width, this.height);
       this.serynge.move(this.activeKeys);
       this.collisionCovidAndProjectile();
