@@ -9,19 +9,20 @@ class Projectile {
 
     this.imgProjectil = new Image();
     this.imgProjectil.src = "./images/laser.png";
+
     this.imgProjectil.addEventListener("load", () => {
-      this.ctx.drawImage(
-        this.imgProjectil,
-        this.x,
-        this.y,
-        this.width,
-        this.height
-      );
+      this.render();
     });
   }
 
   render() {
-    this.ctx.drawImage(this.imgProjectil, this.x, this.y, 20, 20);
+    this.ctx.drawImage(
+      this.imgProjectil,
+      this.x,
+      this.y,
+      this.width,
+      this.height
+    );
   }
 
   move() {
@@ -29,11 +30,11 @@ class Projectile {
   }
 
   left() {
-    return this.x;
+    return this.x + 10;
   }
 
   right() {
-    return this.x + this.width;
+    return this.x + this.width - 10;
   }
 
   top() {

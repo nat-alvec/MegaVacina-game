@@ -1,43 +1,39 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Sigmar+One&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Sigmar+One&display=swap");
 
 body {
-    margin-top: 100px;
-    padding: 0;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    background-color: black;
-    background-image: url("https://img.freepik.com/vetores-gratis/fundo-de-coronavirus-com-frascos-de-vacina-e-seringa_52683-48622.jpg?size=626&ext=jpg");
-    background-size: cover;
-    background-position: center;
+  margin-top: 100px;
+  padding: 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  background-color: black;
+  background-image: url("https://img.freepik.com/vetores-gratis/fundo-de-coronavirus-com-frascos-de-vacina-e-seringa_52683-48622.jpg?size=626&ext=jpg");
+  background-size: cover;
+  background-position: center;
 }
 
-.canvas{
+.title {
+  font-family: "Sigmar One";
+  color: white;
+  font-size: 60px;
 }
 
-.title{
-    font-family: "Sigmar One";
-    color: white;
-    font-size: 60px;
+.controls {
+  font-family: "Sigmar One";
+  color: white;
+  font-size: 20px;
 }
 
-.controls{
-    font-family: "Sigmar One";
-    color: white;
-    font-size: 20px;
-}
-
-.button{
-background-color: purple;
+.button {
+  background-color: purple;
   box-shadow: 1px 3px 0 #cf53c9;
   color: white;
   padding: 0.5em 1.5em;
   position: relative;
   text-transform: uppercase;
   border: 3px solid #814679;
-  font-family:"Sigmar One";
+  font-family: "Sigmar One";
   font-size: 25px;
   letter-spacing: 5px;
   border-radius: 10%;

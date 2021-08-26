@@ -1,44 +1,73 @@
-const gameSound = new Audio();
-gameSound.src = "./images/BackgroundSound.wav";
-gameSound.volume = 0.2;
-
-const shootSound = new Audio();
-shootSound.src = "./images/shootSound.mp3";
-shootSound.volume = 0.4;
-
 class Game {
   constructor() {
     this.canvas = document.getElementById("canvasId");
     this.ctx = this.canvas.getContext("2d");
     this.height = 400;
     this.width = 600;
-
-    this.serynge = new Serynge(this.ctx, 280, 245);
-    this.covid = new Covid(
-      this.ctx,
-      "./images/coronavirus (1).png",
-      this.x,
-      this.y
-    );
-    this.projectile = new Projectile(this.ctx, this.x, this.x);
+    this.activeKeys = {
+      ArrowLeft: false,
+      ArrowRight: false,
+      Space: false,
+    };
 
     this.covids = [];
     this.projectiles = [];
-    this.activeKeys = {};
+    this.syringe = new Syringe(this.ctx, 280, 245);
 
     this.background = new Image();
     this.background.src = "./images/tlo.png";
+    this.gameSound = new Audio("./images/BackgroundSound.wav");
+    this.gameSound.volume = 0.2;
+    this.shootSound = new Audio("./images/shootSound.mp3");
+    this.shootSound.volume = 0.4;
+
     this.background.addEventListener("load", () => {
-      this.ctx.drawImage(this.background, 0, 0, this.width, this.height);
+      this.renderBackground();
+    });
+
+    this.gameInterval = null; // Guarda a ID do setInterval
+    this.generateCovidsInterval = null;
+  }
+
+  setup() {
+    this.gaming = true;
+    this.gameSound.play();
+    this.gameSound.loop = true;
+    this.generateCovids();
+
+    document.addEventListener("keydown", (event) => {
+      const activeKey = event.code;
+      this.activeKeys[activeKey] = true;
+    });
+
+    document.addEventListener("keyup", (event) => {
+      const activeKey = event.code;
+
+      if (this.activeKeys["Space"]) {
+        this.newProjectile();
+        this.shootSound.play();
+      }
+
+      this.activeKeys[activeKey] = false;
     });
   }
 
-  newProjectile() {
-    this.projectiles.push(new Projectile(this.ctx, this.serynge.x + 5, 240));
+  run() {
+    this.gameInterval = setInterval(() => {
+      this.ctx.clearRect(0, 0, this.width, this.height);
+      this.renderBackground();
+      this.syringe.render();
+      this.syringe.move(this.activeKeys);
+      this.moveCovidsAndProjectiles();
+    }, 1000 / 60);
   }
 
-  newCovid() {
-    setInterval(() => {
+  newProjectile() {
+    this.projectiles.push(new Projectile(this.ctx, this.syringe.x, 240));
+  }
+
+  generateCovids() {
+    this.generateCovidsInterval = setInterval(() => {
       const x = Math.floor(Math.random() * 510) + 25;
       const y = -30;
       this.covids.push(
@@ -48,94 +77,66 @@ class Game {
   }
 
   renderImages() {
+    this.renderBackground();
+    this.syringe.render();
+  }
+
+  renderBackground() {
     this.ctx.drawImage(this.background, 0, 0, this.width, this.height);
-    this.serynge.render();
-
-    if (this.projectiles.length !== 0) {
-      for (let i = 0; i < this.projectiles.length; i++) {
-        this.projectiles[i].render();
-      }
-    }
-
-    for (let i = 0; i < this.covids.length; i++) {
-      this.covids[i].render();
-    }
   }
 
-  collisionCovidAndFloor() {
-    for (let i = 0; i < this.covids.length; i++) {
-      if (this.covids[i].bottom() > 285) {
-        alert("You got infected!");
-        gameSound.pause();
+  collisionCovidAndProjectile(projectile, projectilePosition) {
+    this.covids.forEach((covid, covidPosition) => {
+      const conditions = [
+        projectile.top() <= covid.bottom(),
+        projectile.left() >= covid.left(),
+        projectile.left() <= covid.right(),
+        projectile.right() >= covid.left(),
+        projectile.right() <= covid.right(),
+      ];
+
+      const collision1 = conditions[0] && conditions[1] && conditions[2]; // Canto superior esquerdo
+      const collision2 = conditions[0] && conditions[3] && conditions[4]; // Canto superior direito
+
+      if (collision1 || collision2) {
+        this.projectiles.splice(projectilePosition, 1);
+        this.covids.splice(covidPosition, 1);
       }
-    }
-  }
-
-  collisionCovidAndProjectile() {
-    if (this.projectiles.length != 0) {
-      this.projectiles.forEach((projectile, projectilePosition) => {
-        this.covids.forEach((covid, covidPosition) => {
-          console.log(projectile, covid);
-          const impact = [
-            projectile.top() <= covid.bottom(),
-            projectile.left() >= covid.left(),
-            projectile.left() <= covid.right(),
-            projectile.right() <= covid.bottom(),
-            projectile.right() >= covid.left(),
-            projectile.right() <= covid.right(),
-          ];
-
-          if (impact[0] && impact[1] && impact[2]) {
-            console.log("colisão!!!", projectile, covid);
-            this.projectiles.splice(projectilePosition, 1);
-            this.covids.splice(covidPosition, 1);
-          }
-        });
-      });
-    }
+    });
   }
 
   moveCovidsAndProjectiles() {
     for (let i = 0; i < this.covids.length; i++) {
-      this.covids[i].move();
-    }
+      const currentCovid = this.covids[i];
 
-    for (let i = 0; i < this.projectiles.length; i++) {
-      this.projectiles[i].move();
-    }
-  }
+      currentCovid.move();
 
-  setUp() {
-    this.gaming = true;
-    gameSound.play();
-    gameSound.loop = true;
-
-    this.newCovid();
-
-    document.addEventListener("keydown", (event) => {
-      const key = event.keyCode;
-      this.activeKeys[key] = true;
-    });
-
-    document.addEventListener("keyup", (event) => {
-      const key = event.keyCode;
-      this.activeKeys[key] = false;
-
-      if (key === 32) {
-        this.newProjectile();
-        shootSound.play();
+      // Game Over
+      if (currentCovid.bottom() > 285) {
+        this.gameSound.pause();
+        clearInterval(this.gameInterval);
+        clearInterval(this.generateCovidsInterval);
+        alert("You got infected!");
       }
-    });
-  }
 
-  run() {
-    setInterval(() => {
-      this.collisionCovidAndFloor();
-      this.ctx.clearRect(0, 0, this.width, this.height);
-      this.serynge.move(this.activeKeys);
-      this.collisionCovidAndProjectile();
-      this.moveCovidsAndProjectiles();
-      this.renderImages();
-    }, 1000 / 60);
+      currentCovid.render();
+    }
+
+    if (this.projectiles.length) {
+      for (let i = 0; i < this.projectiles.length; i++) {
+        const currentProjectile = this.projectiles[i];
+
+        currentProjectile.move();
+
+        this.collisionCovidAndProjectile(currentProjectile, i);
+
+        // Remove o projétil do array quando sair do canvas
+        if (currentProjectile.top() < 0 - currentProjectile.height) {
+          this.projectiles.splice(i, 1);
+        } else {
+          currentProjectile.render();
+        }
+      }
+    }
   }
 }

@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-undef
 const button = document.getElementById("button");
 const gameBoard = new Game();
 
@@ -6,7 +5,7 @@ let gaming = false;
 
 button.addEventListener("click", () => {
   if (gaming === false) {
-    gameBoard.setUp();
+    gameBoard.setup();
     gameBoard.run();
     button.blur();
   } else {
