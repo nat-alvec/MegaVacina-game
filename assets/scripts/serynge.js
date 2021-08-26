@@ -5,6 +5,8 @@ class Serynge {
     this.ctx = ctx;
     this.x = x;
     this.y = y;
+    this.width = 40;
+    this.height = 40;
     this.velocity = 5;
     this.left = 37;
     this.right = 39;
@@ -12,7 +14,7 @@ class Serynge {
     this.imgSerynge = new Image();
     this.imgSerynge.src = "./images/syringe.png";
     this.imgSerynge.addEventListener("load", () => {
-      this.ctx.drawImage(this.imgSerynge, this.x, this.y, 40, 40);
+      this.ctx.drawImage(this.imgSerynge, this.x, this.y, this.width, this.height);
     });
   }
 
@@ -28,19 +30,15 @@ class Serynge {
 
       if (isMovingLeft){
         this.x -= this.velocity;
-        console.log(this.x)
       }
       if (isMovingRight){
         this.x += this.velocity;
-        console.log(this.x)
       }
       if (minLimit){
         this.x = 25;
-        console.log(this.x)
       }
       if (maxLimit){
         this.x = 530;
-        console.log(this.x)
       }
   }
 }

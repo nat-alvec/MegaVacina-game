@@ -8,6 +8,13 @@ class Game {
     this.width = 600;
 
     this.serynge = new Serynge(this.ctx, 280, 245);
+    this.covid = new Covid(
+      this.ctx,
+      "./images/coronavirus (1).png",
+      this.x,
+      this.y
+    );
+    this.projectile = new Projectile(this.ctx, this.x, this.x);
 
     this.covids = [];
     this.projectiles = [];
@@ -22,19 +29,16 @@ class Game {
   }
 
   newProjectile() {
-    if (this.activeKeys[32]) {
-      this.projectiles.push(new Projectile(this.ctx, this.serynge.x, 230));
-    }
+    this.projectiles.push(new Projectile(this.ctx, this.serynge.x + 5, 240));
   }
 
   newCovid() {
     setInterval(() => {
-      const x = Math.random() * this.canvas.width;
+      const x = Math.floor(Math.random() * 510) + 25;
       const y = -30;
       this.covids.push(
         new Covid(this.ctx, "./images/coronavirus (1).png", x, y)
       );
-      console.log("enemy");
     }, 1500);
   }
 
@@ -53,6 +57,30 @@ class Game {
     }
   }
 
+  collisionCovidAndProjectile() {
+    if (this.projectiles.length != 0) {
+      this.projectiles.forEach((projectile, projectilePosition) => {
+        this.covids.forEach((covid, covidPosition) => {
+          console.log(projectile, covid)
+          const impact = [
+            projectile.top() <= covid.bottom(),
+            projectile.left() >= covid.left(),
+            projectile.left() <= covid.right(),
+            projectile.right() <= covid.bottom(),
+            projectile.right() >= covid.left(),
+            projectile.right() <= covid.right()
+          ]
+          
+          if (impact[0] && impact[1] && impact[2]) {
+            console.log('colisão!!!', projectile, covid)
+            this.projectiles.splice(projectilePosition, 1)
+            this.covids.splice(covidPosition, 1)
+          }
+        })
+      })
+    }
+  }
+
   moveCovidsAndProjectiles() {
     for (let i = 0; i < this.covids.length; i++) {
       this.covids[i].move();
@@ -63,7 +91,7 @@ class Game {
     }
   }
 
-  run() {
+  setUp() {
     this.newCovid();
 
     document.addEventListener("keydown", (event) => {
@@ -74,14 +102,20 @@ class Game {
     document.addEventListener("keyup", (event) => {
       const key = event.keyCode;
       this.activeKeys[key] = false;
-    });
 
+      if (key === 32) {
+        this.newProjectile();
+      }
+    });
+  }
+
+  run() {
     setInterval(() => {
       this.ctx.clearRect(0, 0, this.width, this.height);
+      this.serynge.move(this.activeKeys);
+      this.collisionCovidAndProjectile();
       this.moveCovidsAndProjectiles();
       this.renderImages();
-      this.serynge.move(this.activeKeys);
-      this.newProjectile();
-    }, 1000/60);
+    }, 1000 / 60);
   }
 }
