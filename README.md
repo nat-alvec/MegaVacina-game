@@ -28,4 +28,4 @@ Help the population to get rid of the pandemic! Vaccinate against all viruses be
 
 - Natália Alves
 - [Linkedin](https://www.linkedin.com/in/nat%C3%A1lia-alves-5b00891b9/)
-- ![Presentation link](https://slides.com/nat-2/megavacina)
+- [Presentation link](https://slides.com/nat-2/megavacina)
