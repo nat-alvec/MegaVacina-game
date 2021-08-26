@@ -1,7 +1,7 @@
 # MegaVacina
 
   
-MegaVacina is my first project created with JavaScript, HTML and CSS. Its initial inspiration was the Atari MegaMania game, however, over the days I had to make some modifications resulting in a different but fun game!
+MegaVacina is my first project created with JavaScript, HTML and CSS. Its initial inspiration was the Atari MegaMania game, however, over the days I had to make some modifications resulting in a different, but fun game!
 
 
 ## Installation
@@ -22,7 +22,7 @@ Help the population to get rid of the pandemic! Vaccinate against all viruses be
 - Use "➡" to go right
 - Use "⬅" to go left
 - Use SPACEBAR to shoot
-- Have fun saving the world by staying at home!
+- Have fun saving the world by staying home!
 
 ## Author
 
