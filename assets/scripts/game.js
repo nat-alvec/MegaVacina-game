@@ -26,6 +26,7 @@ class Game {
     });
 
     this.activeKeys = {};
+    this.gaming = false;
   }
 
   newProjectile() {
@@ -92,6 +93,8 @@ class Game {
   }
 
   setUp() {
+    this.gaming = true;
+
     this.newCovid();
 
     document.addEventListener("keydown", (event) => {
