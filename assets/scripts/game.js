@@ -25,6 +25,7 @@ class Game {
       this.renderBackground();
     });
 
+    this.score = 0;
     this.gameInterval = null; // Guarda a ID do setInterval
     this.generateCovidsInterval = null;
   }
@@ -59,7 +60,14 @@ class Game {
       this.syringe.render();
       this.syringe.move(this.activeKeys);
       this.moveCovidsAndProjectiles();
+      this.updateScore(this.score);
     }, 1000 / 60);
+  }
+
+  updateScore() {
+    this.ctx.fillStyle = "black";
+    this.ctx.font = "20px Arial";
+    this.ctx.fillText(`Score: ${this.score}`, this.canvas.width - 335, 320);
   }
 
   newProjectile() {
@@ -101,6 +109,7 @@ class Game {
       if (collision1 || collision2) {
         this.projectiles.splice(projectilePosition, 1);
         this.covids.splice(covidPosition, 1);
+        this.score ++;
       }
     });
   }
